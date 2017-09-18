@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+    db:
+        build: postgres
+        environment:
+          - POSTGRES_USER: joris
+          - POSTGRES_PASSWORD: moine
+        user: "${UID}:${GID}"
+        ports:
+          - "5433:5432"
+        expose:
+          - 5433
+        volumes:
+          - ./data/postgres:var/lib/postgresgl/data
+
+    php:
+        user: "${UID}:${GID}"
+        build:
+          php:7.1-fpm
+
+    nginx:
