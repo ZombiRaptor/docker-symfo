@@ -2,10 +2,10 @@ version: "3"
 
 services:
     db:
-        build: postgres
+        build: docker/postgres
         environment:
-          - POSTGRES_USER: joris
-          - POSTGRES_PASSWORD: moine
+            POSTGRES_USER: joris
+            POSTGRES_PASSWORD: moine
         user: "${UID}:${GID}"
         ports:
           - "5433:5432"
@@ -17,6 +17,21 @@ services:
     php:
         user: "${UID}:${GID}"
         build:
-          php:7.1-fpm
+          docker/php7.1
+        depends_on:
+          - db
+        expose:
+          - 9000
+        working_dir: /app
+        volumes:
+          - .:/app
 
     nginx:
+        image: nginx/latest
+        depends_on:
+          - php
+        ports:
+          - "8000:80"
+        volumes:
+          - .:/app
+          - ./docker/nginx/sites.conf:/etc/nginx/conf.d/default.conf
