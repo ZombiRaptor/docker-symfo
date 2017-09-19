@@ -27,7 +27,7 @@ services:
           - .:/app
 
     nginx:
-        image: nginx/latest
+        image: nginx
         depends_on:
           - php
         ports:
