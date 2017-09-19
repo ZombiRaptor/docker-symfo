@@ -1,7 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Joris
- * Date: 19/09/2017
- * Time: 08:56
- */
+try {
+    $dbconnect = new PDO('pgsql:host=db;port=5432;dbname=docker;user=docker;password=docker');
+} catch (Exception $e) {
+    die('Erreur : ' . $e->getMessage());
+}
+$stmt = $dbconnect->prepare('SELECT title FROM posts LIMIT 1');
+$stmt->execute();
+echo $stmt->fetch()['title'];
