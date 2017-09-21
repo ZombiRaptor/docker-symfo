@@ -1,6 +1,6 @@
 <?php
 try {
-    $dbconnect = new PDO('pgsql:host=db;port=5432;dbname=docker;user=docker;password=docker');
+    $dbconnect = new PDO('pgsql:host=db;port=5432;user=joris;password=moine');
 } catch (Exception $e) {
     die('Erreur : ' . $e->getMessage());
 }
